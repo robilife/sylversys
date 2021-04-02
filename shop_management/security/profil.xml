@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="agent_saisie" model="res.groups">
+            <field name="name">Agent de saisie</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="agent_verification" model="res.groups">
+            <field name="name">Agent de vérification</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+        <record id="agent_validation" model="res.groups">
+            <field name="name">Agent de validation</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+        </record>
+    </data>
+</odoo>

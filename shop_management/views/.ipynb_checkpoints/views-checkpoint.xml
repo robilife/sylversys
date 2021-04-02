@@ -1,0 +1,34 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="shop_management.list">
+      <field name="name">shop_management list</field>
+      <field name="model">shop_management.res_shop</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="localite"/>
+          <field name="marchand_id"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="shop_management.action_window">
+      <field name="name">shop_management window</field>
+      <field name="res_model">shop_management.sres_shop</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Top menu item -->
+    <menuitem name="shop_management" id="shop_management.menu_root"/>
+      
+    <!-- menu categories -->
+    <menuitem name="Menu 1" id="shop_management.menu_1" parent="shop_management.menu_root"/>
+    <menuitem name="Menu 2" id="shop_management.menu_2" parent="shop_management.menu_root"/>
+      
+    <!-- actions -->
+    <menuitem name="List" id="shop_management.menu_1_list" parent="shop_management.menu_1"
+              action="shop_management.action_window"/>
+  </data>
+</odoo>
