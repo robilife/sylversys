@@ -1,3 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_res_shop,shop_management.res_shop,model_res_shop,,1,0,0,0
-access_res_shop,shop_management.res_shop,model_res_shop,shop_management.agent_saisie,1,1,1,1
+access_res_shop_all,shop_management.res_shop,model_res_shop,,1,0,0,0
+access_res_shop_verification,shop_management.res_shop,model_res_shop,shop_management.agent_verification,1,1,0,0
+access_res_shop_validate,shop_management.res_shop,model_res_shop,shop_management.agent_validation,1,1,0,0
+access_res_shop_saisie,shop_management.res_shop,model_res_shop,shop_management.agent_saisie,1,1,1,1
+
+access_res_marchand_all,shop_management.res_marchand,model_res_marchand,,1,0,0,0
+access_res_marchand_verification,shop_management.res_marchand,model_res_shop,shop_management.agent_verification,1,1,0,0
+access_res_marchand_validate,shop_management.res_marchand,model_res_shop,shop_management.agent_validation,1,1,0,0
+access_res_marchand,shop_management.res_marchand,model_res_marchand,shop_management.agent_saisie,1,1,1,1

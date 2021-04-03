@@ -3,7 +3,7 @@
     <!-- explicit list view definition -->
     <record model="ir.ui.view" id="shop_management.list">
       <field name="name">shop_management list</field>
-      <field name="model">shop_management.res_shop</field>
+      <field name="model">res.shop</field>
       <field name="arch" type="xml">
         <tree>
           <field name="name"/>
@@ -12,23 +12,112 @@
         </tree>
       </field>
     </record>
+      
+    <record id="view_res_shop_form" model="ir.ui.view">
+            <field name="name">res.shop.form</field>
+            <field name="model">res.shop</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="send_to_fillout" string="Envoyer en Saisie" type="object" states="check" class="btn-primary"/>
+                        <button name="send_to_check" string="Envoyer en Vérification" type="object" states="draft,validate" class="btn-primary"/>
+                        <button name="send_to_validate" string="Envoyer en Validation" type="object" states="check" class="btn-primary"/>
+                        <button name="action_validate" string="Activer" type="object" states="validate" class="btn-primary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,check,validate,active"/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <group>
+                                <field name="name"/>
+                                <field name="localite"/>
+                                <field name="marchand_id"/>
+                            </group>
+                        </div>
+                    </sheet>
+                </form>
+        </field>
+      </record>
 
     <!-- actions opening views on models -->
     <record model="ir.actions.act_window" id="shop_management.action_window">
-      <field name="name">shop_management window</field>
-      <field name="res_model">shop_management.sres_shop</field>
+      <field name="name">Shop Management</field>
+      <field name="res_model">res.shop</field>
       <field name="view_mode">tree,form</field>
     </record>
+      
+    <record id="view_res_marchand_form" model="ir.ui.view">
+            <field name="name">res.marchand.form</field>
+            <field name="model">res.marchand</field>
+            <field name="arch" type="xml">
+                <form string="Contact">
+                    <header>
+                        <button name="send_to_fillout" string="Envoyer en Saisie" type="object" states="check" class="btn-primary"/>
+                        <button name="send_to_check" string="Envoyer en Vérification" type="object" states="draft,validate" class="btn-primary"/>
+                        <button name="send_to_validate" string="Envoyer en Validation" type="object" states="check" class="btn-primary"/>
+                        <button name="action_validate" string="Activer" type="object" states="validate" class="btn-primary"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,check,validate,active"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"/>
+                            </button>
+                        </div>
+                            <field name="is_company" invisible="1"/>
+                            <field name="type" invisible="1"/>
+                            <field name="image" widget='image' class="oe_avatar" options='{"preview_image": "image_medium"}'/>
+                            <div class="oe_title">
+                                <h1>
+                                    <field name="name" default_focus="1" placeholder="Name" attrs="{'required' : [('type', '=', 'contact')]}"/>
+                                </h1>
+                            </div>
+                            <group>
+                                <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
+                                <field name="user_ids" invisible="1"/>
+                                <field name="ref" attrs="{'required' : [('state', '=', 'validate')]}"/>
+                                <field name="email" widget="email" context="{'gravatar_image': True}" required="context.get('force_email', False)" attrs="{'required': [('user_ids','!=', [])]}"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="mobile" widget="phone"/>
+                            </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+      
+      
+      <record model="ir.actions.act_window" id="shop_management.action_marchand_window">
+      <field name="name">Marchand</field>
+      <field name="res_model">res.marchand</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+      
+      <record id="sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='partner_id']" position="after">
+                   <field name="marchand_id" />
+                </xpath>
+          </field>
+      </record>
+      
 
     <!-- Top menu item -->
     <menuitem name="shop_management" id="shop_management.menu_root"/>
       
     <!-- menu categories -->
-    <menuitem name="Menu 1" id="shop_management.menu_1" parent="shop_management.menu_root"/>
-    <menuitem name="Menu 2" id="shop_management.menu_2" parent="shop_management.menu_root"/>
+    <menuitem name="Boutique" id="shop_management.menu_1" parent="shop_management.menu_root"/>
       
     <!-- actions -->
-    <menuitem name="List" id="shop_management.menu_1_list" parent="shop_management.menu_1"
+    <menuitem name="Boutiques" id="shop_management.menu_sho" parent="shop_management.menu_1"
               action="shop_management.action_window"/>
+      
+    <menuitem name="Marchand" id="shop_management.menu_marchand" parent="shop_management.menu_1"
+              action="shop_management.action_marchand_window"/>
   </data>
 </odoo>
