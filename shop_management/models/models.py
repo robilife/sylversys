@@ -9,9 +9,9 @@ _logger = logging.getLogger('__name__')
 class shopManagement(models.Model):
     _name = 'res.shop'
 
-    name = fields.Char('Name')
+    name = fields.Char('Name', required=True)
     localite = fields.Char('Localité')
-    marchand_id = fields.Many2one('res.marchand')
+    marchand_id = fields.Many2one('res.marchand', required=True)
     
     state = fields.Selection([
         ('draft', 'Brouillon'),
